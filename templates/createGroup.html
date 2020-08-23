@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+{% load widget_tweaks %}
+{% load ChoiceSubsystem_extras %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Group</title>
+    <style>
+        .require {
+    color: #666;
+}
+label small {
+    color: #999;
+    font-weight: normal;
+}
+    </style>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+</head>
+<body>
+<div class="container">
+	<div class="row">
+
+	    <div class="col-md-8 col-md-offset-2">
+
+    		<h1>Create Group</h1>
+
+    		<form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+    		    <div class="form-group">
+    		        <label for="title">Group Name <span class="require">*</span></label>
+    		        <input type="text" class="form-control" name="title" >
+    		    </div>
+
+    		    <div class="form-group">
+    		        <label for="members">Add Members</label>
+                <br>
+                    {% for key,value in username_list.items %}
+                    <input type="checkbox" name="selected_member[]" value="{{ key }}">{{ value }}
+                        <br>
+                    {% endfor %}
+    		        <!--textarea rows="5" class="form-control" name="description" ></textarea-->
+
+    		    </div>
+
+                <!--divclass="row">
+                    <div class="col-md-12">
+                    <select class="mdb-select colorful-select dropdown-primary md-form" multiple searchable="Search here..">
+                      <option value="" disabled selected>Choose your country</option>
+                      <option value="1">USA</option>
+                      <option value="2">Germany</option>
+                      <option value="3">France</option>
+                      <option value="4">Poland</option>
+                      <option value="5">Japan</option>
+                    </select>
+                    <label class="mdb-main-label">Label example</label>
+                    <button class="btn-save btn btn-primary btn-sm">Save</button>
+
+                  </div>
+                </div-->
+
+    		    <div class="form-group">
+    		        <button type="submit" class="btn btn-lg btn-danger">
+    		            Create Group
+    		        </button>
+    		        <button class="btn btn-default btn-lg">
+    		            Cancel
+    		        </button>
+    		    </div>
+
+    		</form>
+		</div>
+
+	</div>
+</div>
+<script>
+    $(document).ready(function() {
+$('.mdb-select').materialSelect();
+});
+</script>
+</body>
+</html>

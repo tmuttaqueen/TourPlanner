@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+{% load ChoiceSubsystem_extras %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+
+    strong {
+  font-weight: bold;
+}
+
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+</style>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
+</head>
+<body>
+
+
+<form method ="post" action="">
+{% csrf_token %}
+    <ul class="form-row-inner">
+    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">More Cities<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          {% for key,value in other_cities.items %}
+          <li><a href="{% url 'preference' key %}"></a>{{ value }}</li>
+
+          {% endfor %}
+        </ul>
+    </li>
+    </ul>
+{% for key,value in preference_list.items %}
+{% if  pref_spotName_list|foo:key %}
+<div class="container mt-5">
+    <hr>
+     <h2>{{ value  }}</h2>
+     <ul class="list-group list-group-flush">
+         <div class="container">
+            {% with spots=pref_spotName_list|foo:key %}
+            {% with images=pref_spotImage_list|foo:key %}
+            {% with descriptions=pref_spotDescription_list|foo:key %}
+            {% for key,value in spots.items %}
+             <div class="row">
+                <div class="card mb-5" style="max-width: 1200px;">
+                  <div class="row no-gutters">
+                    <div class="col-md-4">
+                      <img src="/media/{{images|foo:key}}" class="card-img" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body">
+                        <h5 class="card-title">{{ value }}</h5>
+                        <p class="card-text">{{descriptions|foo:key}}</p>
+                        <p class="card-text"><small class="text-muted"></small></p>
+                        <label class="switch">
+                             <input type="checkbox" name="selected_spot[]" value="{{ key }}">
+                             <span class="slider round"></span>
+                         </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+             </div>
+
+              {% endfor %}
+              {% endwith %}
+              {% endwith %}
+               {% endwith %}
+
+         </div>
+     </ul>
+</div>
+ {% endif %}
+{% endfor %}
+    <div class="container mt-5">
+        <div class="row">
+            <input type="submit" class="btn btn-group-lg btn-dark" value="NEXT" name="next" >
+        </div>
+        <div class="row">
+            <input type="submit" class="btn btn-group-lg btn-dark" value="ADD MORE CITIES" name="add_more_cities">
+        </div>
+    </div>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

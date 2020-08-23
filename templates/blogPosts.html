@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+{% load ChoiceSubsystem_extras %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container mt-5">
+    <hr>
+     <h2>{{ value  }}</h2>
+     <ul class="list-group list-group-flush">
+    <div class="container">
+    {% for key,value in caption.items %}
+        <div class="card mb-3" style="max-width: 540px;">
+              <div class="row no-gutters">
+                <div class="col-md-4">
+                  <img src="/media/{{ image|foo:key }}" class="card-img" alt="...">
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ value }}</h5>
+                    <p class="card-text"><small class="text-muted">Posted on: {{ post_date|foo:key }}</small></p>
+                    <p class="card-text">{{ data|foo:key }}</p>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+    {% endfor %}
+             </div>
+     </ul>
+</div>
+
+</body>
+</html>
